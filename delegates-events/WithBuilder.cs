@@ -1,40 +1,43 @@
 ﻿namespace delegates_events
 {
-    public class WithBuilder
+    public static class WithBuilder
     {
-        public delegate string ChooseType();
-        public Dictionary<int, ChooseType> Choices;
+        public delegate int Calculate(params int[] numbers);
 
-        public WithBuilder()
+        public static void RealizeOperation(params int[] numbers)
         {
-            Choices = new()
+            Calculate operation = new(Sum);
+
+            var resultSum = operation(numbers);
+            Console.WriteLine("Result of the sum is:" + resultSum);
+
+            operation = new(Multiply);
+
+            var resultMultiply = operation(numbers);
+            Console.WriteLine("Result of the multiply is:" + resultMultiply);
+        }
+
+        public static int Sum(params int[] numbers)
+        {
+            int result = 0;
+            for (int i = 0; i < numbers.Length; i++)
             {
-                { 1, Basic },
-                { 2, Luxury },
-                { 3, Sport },
-            };
+                result += numbers[i];
+            }
+
+            return result;
         }
 
-        public string ChooseTypeCar(int typeCar)
+        public static int Multiply(params int[] numbers)
         {
-            var choice = Choices.FirstOrDefault(x => x.Key == typeCar);
+            int result = numbers[0];
 
-            return choice.Value is null
-                ? "Non-existent car type!"
-                : choice.Value.Invoke();
-        }
+            for (int i = 1; i < numbers.Length; i++)
+            {
+                result *= numbers[i];
+            }
 
-        public static string Basic()
-        {
-            return $"Congratulations! You just got a new car(basic).";
-        }
-        public static string Luxury()
-        {
-            return $"Congratulations! You just got a new car(luxurious).";
-        }
-        public static string Sport()
-        {
-            return $"Congratulations! You just got a new car(sporty).";
+            return result;
         }
     }
 }

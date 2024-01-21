@@ -1,41 +1,40 @@
 ﻿namespace delegates_events
 {
-    public static class WithDictionary
+    public class WithDictionary
     {
-        public delegate int Calculate(params int[] numbers);
+        public delegate string ChooseType();
+        public Dictionary<int, ChooseType> Choices;
 
-        public static void RealizeOperation(params int[] numbers)
+        public WithDictionary()
         {
-            Calculate operation = new(Sum);
-            var resultSum = operation(numbers);
-            Console.WriteLine("Result of the sum is:" + resultSum);
-
-            operation = new(Multiply);
-            var resultMultiply = operation(numbers);
-            Console.WriteLine("Result of the multiply is:" + resultMultiply);
+            Choices = new()
+            {
+                { 1, Basic },
+                { 2, Luxury },
+                { 3, Sport },
+            };
         }
 
-        public static int Sum(params int[] numbers)
+        public string ChooseTypeCar(int typeCar)
         {
-            int result = 0;
-            for (int i = 0; i < numbers.Length; i++)
-            {
-                result += numbers[i];
-            }
+            var choice = Choices.FirstOrDefault(x => x.Key == typeCar);
 
-            return result;
+            return choice.Value is null
+                ? "Non-existent car type!"
+                : choice.Value.Invoke();
         }
 
-        public static int Multiply(params int[] numbers)
+        public static string Basic()
         {
-            int result = numbers[0];
-
-            for (int i = 1; i < numbers.Length; i++)
-            {
-                result *= numbers[i];
-            }
-
-            return result;
+            return $"Congratulations! You just got a new car(basic).";
+        }
+        public static string Luxury()
+        {
+            return $"Congratulations! You just got a new car(luxurious).";
+        }
+        public static string Sport()
+        {
+            return $"Congratulations! You just got a new car(sporty).";
         }
     }
 }

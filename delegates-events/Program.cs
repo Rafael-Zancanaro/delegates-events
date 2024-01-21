@@ -43,7 +43,7 @@ namespace delegates_events
                     numbers.Add(int.Parse(Console.ReadLine()));
                 }
 
-                WithDictionary.RealizeOperation(numbers.ToArray());
+                WithBuilder.RealizeOperation(numbers.ToArray());
 
                 Console.WriteLine("\nDo you wanna realize another operation? Y(yes) Enter(Exit)");
                 response = Console.ReadLine();
@@ -60,7 +60,7 @@ namespace delegates_events
                 Console.WriteLine("Choose the type of car:\n 1 - Basic\n 2 - Luxury\n 3 - Sport \nChoice:");
 
                 var type = int.Parse(Console.ReadLine());
-                var choice = new WithBuilder().ChooseTypeCar(type);
+                var choice = new WithDictionary().ChooseTypeCar(type);
                 Console.WriteLine(choice);
 
                 Console.WriteLine("\nMake another purchase? Y(yes) Enter(exit)");
